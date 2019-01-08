@@ -9,6 +9,10 @@ var justGotInCollision = false;
 var lastHitFrameCount = 0;
 var blink = false;
 var score = 0;
+var highScore = 0;
+
+var restartGameButton;
+var buttonLoaded = false;
 
 
 function setup() {
@@ -22,7 +26,7 @@ function draw() {
 
     background(0);
 
-    for (i = 0; i <obstacles.length; i++) {
+    for (i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].show();
 
@@ -36,18 +40,26 @@ function draw() {
     ship.update();
 
 
-
-
     if (frameCount % 5 === 0) {
         checkHeldKeys();
     }
 
-    if (frameCount % Math.floor(100/ (2 * level)) == 0) {
+    if (frameCount % Math.floor(100 / (2 * level)) == 0) {
         obstacles.push(new Obstacle(level));
         score++;
     }
 
     if (justGotInCollision) {
+
+        if (lives == 0) {
+            ship.blink();
+            restartGameButton = createButton("Restart Game?");
+            restartGameButton.mousePressed(restartGame);
+            restartGameButton.position(canvasWidth / 2 - 30, canvasHeight / 2);
+            buttonLoaded = true;
+            noLoop();
+        }
+
         //wait 100 frames until ship can lose another life
         if (frameCount - lastHitFrameCount > 150) {
             justGotInCollision = false;
@@ -60,6 +72,8 @@ function draw() {
         } else {
             blink = true;
         }
+
+
     } else {
         ship.show();
     }
@@ -69,7 +83,26 @@ function draw() {
     text("Lives: " + lives, 10, 30);
 
     textSize(32);
-    text("Score: " + score, canvasWidth-200, 30);
+    text("Score: " + score, canvasWidth - 200, 30);
+
+}
+
+
+function restartGame() {
+    if (score > highScore) {
+        highScore = score;
+    }
+    obstacles = [];
+    lives = 3;
+    score = 0;
+    lastHitFrameCount = 0;
+    justGotInCollision = false;
+    blink = false;
+    ship = new Ship();
+    restartGameButton.remove();
+    buttonLoaded = false;
+    loop();
+
 
 }
 
@@ -80,7 +113,7 @@ function draw() {
 
 function keyPressed() {
 
-    if (key === 'd' || keyCode === RIGHT_ARROW ) {
+    if (key === 'd' || keyCode === RIGHT_ARROW) {
 
         ship.moveRight();
         rightIsHeld = true;
@@ -106,11 +139,11 @@ function keyPressed() {
 /*
     When a key is realeased, stop accelerating in the particular direction
  */
-function keyReleased(){
+function keyReleased() {
 
-    if (key === 'd' || keyCode === RIGHT_ARROW ) {
+    if (key === 'd' || keyCode === RIGHT_ARROW) {
 
-         rightIsHeld = false;
+        rightIsHeld = false;
 
     } else if (key === 'w' || keyCode === UP_ARROW) {
 
@@ -133,17 +166,17 @@ function keyReleased(){
  */
 function checkHeldKeys() {
 
-       if (downIsHeld) {
-           ship.moveDown();
-       }
-       if (upIsHeld) {
-           ship.moveUp();
-       }
-       if (rightIsHeld) {
-           ship.moveRight();
-       }
-       if (leftIsHeld) {
-           ship.moveLeft();
-       }
+    if (downIsHeld) {
+        ship.moveDown();
+    }
+    if (upIsHeld) {
+        ship.moveUp();
+    }
+    if (rightIsHeld) {
+        ship.moveRight();
+    }
+    if (leftIsHeld) {
+        ship.moveLeft();
+    }
 
 }
