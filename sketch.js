@@ -2,21 +2,38 @@ var ship;
 var canvasWidth = 600;
 var canvasHeight = 600;
 var upIsHeld, downIsHeld, leftIsHeld, rightIsHeld = false;
+var obstacles = [];
+var level = 4;
 
 function setup() {
     createCanvas(canvasWidth, canvasHeight);
     ship = new Ship();
+    obstacles.push(new Obstacle(level));
+
 }
 
 function draw() {
 
     background(0);
 
+    for (i = 0; i <obstacles.length; i++) {
+        obstacles[i].update();
+        obstacles[i].show();
+
+    }
+
     ship.update();
     ship.show();
+
     if (frameCount % 5 === 0) {
         checkHeldKeys();
     }
+
+    if (frameCount % Math.floor(100/ (2 * level)) == 0) {
+        obstacles.push(new Obstacle(level));
+    }
+
+
 }
 
 

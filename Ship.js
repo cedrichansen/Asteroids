@@ -5,12 +5,12 @@ function Ship () {
         this.x = width/2;
         this.diameter = 16;
 
-        this.Yvelocity = 0;
-        this.Xvelocity = 0;
+        this.shipYvelocity = 0;
+        this.shipXvelocity = 0;
 
         this.velocity = 0;
 
-        this.thrustSpeed = 2;
+        this.thrustSpeed = 1.5;
         this.decelerationRate = 0;
 
         this.show = function() {
@@ -20,64 +20,68 @@ function Ship () {
 
         this.update = function () {
 
-            this.velocity = Math.sqrt((this.Xvelocity * this.Xvelocity) +
-                (this.Yvelocity * this.Yvelocity));
+            this.velocity = Math.sqrt((this.shipXvelocity * this.shipXvelocity) +
+                (this.shipYvelocity * this.shipYvelocity));
 
             this.decelerationRate = 0.01 * this.velocity;
 
 
-            if (this.Xvelocity >0) {
-                this.Xvelocity -= this.decelerationRate;
-            } else if (this.Xvelocity < 0) {
-                this.Xvelocity += this.decelerationRate;
+            if (this.shipXvelocity >0) {
+                this.shipXvelocity -= this.decelerationRate;
+            } else if (this.shipXvelocity < 0) {
+                this.shipXvelocity += this.decelerationRate;
             }
-            this.x += this.Xvelocity;
+            this.x += this.shipXvelocity;
 
 
-            if (this.Yvelocity >0) {
-                this.Yvelocity -= this.decelerationRate;
-            } else if (this.Yvelocity < 0) {
-                this.Yvelocity += this.decelerationRate;
+            if (this.shipYvelocity >0) {
+                this.shipYvelocity -= this.decelerationRate;
+            } else if (this.shipYvelocity < 0) {
+                this.shipYvelocity += this.decelerationRate;
             }
 
-            this.y -= this.Yvelocity;
+            this.y -= this.shipYvelocity;
 
 
 
             if (this.y > height) {
-                this.y = 0;
+                this.y = height;
+                this.shipYvelocity = 0;
             }
 
             if (this.y < 0) {
-                this.y = height;
+                this.y = 0;
+                this.shipYvelocity = 0;
             }
 
             if (this.x > width) {
-                this.x = 0;
+                this.x = width;
+                this.shipXvelocity = 0;
             }
 
             if (this.x <0) {
-                this.x = width;
+                this.x = 0;
+                this.shipXvelocity = 0;
             }
 
         }
 
 
         this.moveUp = function() {
-            this.Yvelocity += this.thrustSpeed;
+            this.shipYvelocity += this.thrustSpeed;
         }
 
         this.moveDown = function() {
-            this.Yvelocity -= this.thrustSpeed;
+            this.shipYvelocity -= this.thrustSpeed;
 
         }
 
         this.moveRight = function() {
-            this.Xvelocity +=this.thrustSpeed;
+            this.shipXvelocity +=this.thrustSpeed;
         }
 
         this.moveLeft = function() {
-            this.Xvelocity -= this.thrustSpeed;
+            this.shipXvelocity -= this.thrustSpeed;
         }
 
 
