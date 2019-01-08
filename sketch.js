@@ -3,13 +3,15 @@ var canvasWidth = 600;
 var canvasHeight = 600;
 var upIsHeld, downIsHeld, leftIsHeld, rightIsHeld = false;
 var obstacles = [];
-var level = 2;
+var level = 1;
 var lives = 3;
 var justGotInCollision = false;
 var lastHitFrameCount = 0;
 var blink = false;
 var score = 0;
 var highScore = 0;
+
+var levelFrameCount = 0;
 
 var restartGameButton;
 var buttonLoaded = false;
@@ -30,7 +32,7 @@ function draw() {
         obstacles[i].update();
         obstacles[i].show();
 
-        if (!justGotInCollision && collideCircleCircle(ship.x, ship.y, ship.diameter + 8, obstacles[i].x, obstacles[i].y, obstacles[i].Xdiam)) {
+        if (!justGotInCollision && collideCircleCircle(ship.x, ship.y, ship.diameter + 16, obstacles[i].x, obstacles[i].y, obstacles[i].Xdiam)) {
             console.log("lives left:" + --lives);
             justGotInCollision = true;
             lastHitFrameCount = frameCount;
@@ -79,11 +81,27 @@ function draw() {
     }
 
 
+    if (frameCount - levelFrameCount > 1000) {
+
+        levelFrameCount = frameCount;
+        level++;
+        obstacles = [];
+
+
+    }
+
+
     textSize(32);
     text("Lives: " + lives, 10, 30);
 
     textSize(32);
-    text("Score: " + score, canvasWidth - 200, 30);
+    text("Score: " + score, canvasWidth - 180, 30);
+
+    textSize(32);
+    text("HighScore: " + highScore, canvasWidth - 225, canvasHeight-30);
+
+    textSize(32);
+    text("Level: " + level, 10,canvasHeight-30);
 
 }
 
@@ -101,9 +119,8 @@ function restartGame() {
     ship = new Ship();
     restartGameButton.remove();
     buttonLoaded = false;
+    level = 1;
     loop();
-
-
 }
 
 
