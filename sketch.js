@@ -3,7 +3,13 @@ var canvasWidth = 600;
 var canvasHeight = 600;
 var upIsHeld, downIsHeld, leftIsHeld, rightIsHeld = false;
 var obstacles = [];
-var level = 4;
+var level = 2;
+var lives = 3;
+var justGotInCollision = false;
+var lastHitFrameCount = 0;
+var blink = false;
+var score = 0;
+
 
 function setup() {
     createCanvas(canvasWidth, canvasHeight);
@@ -20,10 +26,17 @@ function draw() {
         obstacles[i].update();
         obstacles[i].show();
 
+        if (!justGotInCollision && collideCircleCircle(ship.x, ship.y, ship.diameter + 8, obstacles[i].x, obstacles[i].y, obstacles[i].Xdiam)) {
+            console.log("lives left:" + --lives);
+            justGotInCollision = true;
+            lastHitFrameCount = frameCount;
+        }
     }
 
     ship.update();
-    ship.show();
+
+
+
 
     if (frameCount % 5 === 0) {
         checkHeldKeys();
@@ -31,8 +44,32 @@ function draw() {
 
     if (frameCount % Math.floor(100/ (2 * level)) == 0) {
         obstacles.push(new Obstacle(level));
+        score++;
     }
 
+    if (justGotInCollision) {
+        //wait 100 frames until ship can lose another life
+        if (frameCount - lastHitFrameCount > 150) {
+            justGotInCollision = false;
+            console.log("can now get hit again");
+        }
+
+        if (blink) {
+            ship.blink();
+            blink = false;
+        } else {
+            blink = true;
+        }
+    } else {
+        ship.show();
+    }
+
+
+    textSize(32);
+    text("Lives: " + lives, 10, 30);
+
+    textSize(32);
+    text("Score: " + score, canvasWidth-200, 30);
 
 }
 

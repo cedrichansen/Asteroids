@@ -18,6 +18,12 @@ function Ship () {
             ellipse(this.x, this.y, this.diameter, this.diameter);
         }
 
+        this.blink = function() {
+
+            fill(50,205,50);
+            ellipse(this.x, this.y, this.diameter, this.diameter);
+        }
+
         this.update = function () {
 
             this.velocity = Math.sqrt((this.shipXvelocity * this.shipXvelocity) +

@@ -11,6 +11,8 @@ function Obstacle(level) {
     this.obstacleXvelocity = 0;
     this.obstacleYvelocity = 0;
 
+    this.Xdiam = 0;
+
 
     /*
          0
@@ -61,14 +63,16 @@ function Obstacle(level) {
 
 
     //create obstacles of varying size
-    this.Xdiam = random(10, 20);
-    this.Ydiam = random(10, 20);
+    this.diam = random(10, (20 + (2 * level)));
+
 
 
     this.show = function () {
 
+        ellipseMode(CENTER);
+
         fill(255, 0, 0);
-        ellipse(this.x, this.y, this.Xdiam, this.Ydiam);
+        ellipse(this.x, this.y, this.diam, this.diam);
     }
 
     this.update = function () {
