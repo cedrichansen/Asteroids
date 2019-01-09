@@ -1,6 +1,6 @@
 var ship;
-var canvasWidth = 600;
-var canvasHeight = 600;
+//var canvasWidth = 600;
+//var canvasHeight = 600;
 var upIsHeld, downIsHeld, leftIsHeld, rightIsHeld = false;
 var obstacles = [];
 var level = 1;
@@ -18,7 +18,7 @@ var buttonLoaded = false;
 
 
 function setup() {
-    createCanvas(canvasWidth, canvasHeight);
+    createCanvas(windowWidth - 4, windowHeight - 4);
     ship = new Ship();
     obstacles.push(new Obstacle(level));
 
@@ -95,13 +95,13 @@ function draw() {
     text("Lives: " + lives, 10, 30);
 
     textSize(32);
-    text("Score: " + score, canvasWidth - 180, 30);
+    text("Score: " + score, windowWidth - 180, 30);
 
     textSize(32);
-    text("HighScore: " + highScore, canvasWidth - 225, canvasHeight-30);
+    text("HighScore: " + highScore, windowWidth - 225, windowHeight-30);
 
     textSize(32);
-    text("Level: " + level, 10,canvasHeight-30);
+    text("Level: " + level, 10,windowHeight-30);
 
 }
 
