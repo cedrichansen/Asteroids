@@ -57,7 +57,7 @@ function draw() {
             ship.blink();
             restartGameButton = createButton("Restart Game?");
             restartGameButton.mousePressed(restartGame);
-            restartGameButton.position(canvasWidth / 2 - 30, canvasHeight / 2);
+            restartGameButton.position(windowWidth / 2 - 30, windowHeight / 2);
             buttonLoaded = true;
             noLoop();
         }
