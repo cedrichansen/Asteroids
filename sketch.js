@@ -95,13 +95,13 @@ function draw() {
     text("Lives: " + lives, 10, 30);
 
     textSize(32);
-    text("Score: " + score, windowWidth - 180, 30);
+    text("Score: " + score, windowWidth - 300, 30);
 
     textSize(32);
-    text("HighScore: " + highScore, windowWidth - 225, windowHeight-75);
+    text("HighScore: " + highScore, windowWidth - 300, windowHeight-60);
 
     textSize(32);
-    text("Level: " + level, 10,windowHeight-75);
+    text("Level: " + level, 10,windowHeight-60);
 
 }
 
