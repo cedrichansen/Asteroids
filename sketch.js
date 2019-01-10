@@ -98,10 +98,10 @@ function draw() {
     text("Score: " + score, windowWidth - 180, 30);
 
     textSize(32);
-    text("HighScore: " + highScore, windowWidth - 225, windowHeight-30);
+    text("HighScore: " + highScore, windowWidth - 225, windowHeight-75);
 
     textSize(32);
-    text("Level: " + level, 10,windowHeight-30);
+    text("Level: " + level, 10,windowHeight-75);
 
 }
 
